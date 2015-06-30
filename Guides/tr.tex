@@ -153,7 +153,7 @@ are necessary when programming smart contracts.
 Based on lessons and insights 
 drawn through this experimental lab, we have designed
 new, open course materials and lab designs 
-for smart contract programming~\cite{anonymous}.
+for smart contract programming~\cite{coursematerials}.
 We hope that these open-source course materials and labs
 will aid both instructors who 
 wish to teach smart contract programming and students/developers who 
@@ -854,14 +854,14 @@ which they forfeit unless they open their commitments in a timely manner.
 This way, even the losing player has a motivation to open his bid.
 
 \subsection{Ethereum-specific Mistakes}
-Several subtle details about Ethereum's implementation make smart contract programming prone to error. Without going into too much detail, contracts must be written ``defensively'' to avoid exceptions that can occur when multiple contracts interact. One Ethereum contract can send a message to another contract, which can in turn send a message to another. However, Ethereum limits the resulting call-stack to a fixed size of 1024. For example, if the callstack depth is already at this limit when the \texttt{send} instruction on Line 62 of Figure~\ref{fig:nocrypto} is reached, then that instruction will be skipped and the winner will not get paid. Furthermore, a \texttt{send} instruction sends by default the maximum available gas to the recipient. If the recipient of the \texttt{send} instruction on Line 62, for example, is a contract with buggy code that raises an exception, then Line 63 is never executed and the other player loses out. In our online course materials~\cite{anonymous} we offer guidance on avoiding these Ethereum-specific hazards.
+Several subtle details about Ethereum's implementation make smart contract programming prone to error. Without going into too much detail, contracts must be written ``defensively'' to avoid exceptions that can occur when multiple contracts interact. One Ethereum contract can send a message to another contract, which can in turn send a message to another. However, Ethereum limits the resulting call-stack to a fixed size of 1024. For example, if the callstack depth is already at this limit when the \texttt{send} instruction on Line 62 of Figure~\ref{fig:nocrypto} is reached, then that instruction will be skipped and the winner will not get paid. Furthermore, a \texttt{send} instruction sends by default the maximum available gas to the recipient. If the recipient of the \texttt{send} instruction on Line 62, for example, is a contract with buggy code that raises an exception, then Line 63 is never executed and the other player loses out. In our online course materials~\cite{coursematerials} we offer guidance on avoiding these Ethereum-specific hazards.
 
 
 \subsection{Complete, Fixed Contract} 
 Due to space constraints, 
 we provide a fully working, incentive compatible, and secure 
 contract for  the ``Rock, Paper, Scissors'' game
-in our online course materials~\cite{anonymous}. 
+in our online course materials~\cite{coursematerials}. 
 
 %In our online course materials, we provide a complete incentive compatible version of this contract that addresses all of the above concerns.\anote{CITE}
 
@@ -988,7 +988,7 @@ we will shortly open source well-structured course and lab materials on
 smart contract programming.
 For a sneak peek of our course 
 materials, please visit 
-\url{http://www.anonymouspaper.com/ether}~\cite{anonymous}.
+\url{http://mc2-umd.github.io/ethereumlab/}~\cite{coursematerials}.
 %\elaine{fill in anonymous url}.
 
 The course materials comprise the following:
