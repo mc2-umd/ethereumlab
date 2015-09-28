@@ -1,5 +1,5 @@
 import serpent
-from pyethereum import tester, utils, abi
+from ethereum import tester, utils, abi
 
 #A mutual credit system will zero out when all debts are paid.
 

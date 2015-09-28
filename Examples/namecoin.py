@@ -1,5 +1,5 @@
 import serpent
-from pyethereum import tester, utils, abi
+from ethereum import tester, utils, abi
 
 serpent_code = '''
 def register(key, value):
