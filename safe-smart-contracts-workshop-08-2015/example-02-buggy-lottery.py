@@ -70,7 +70,6 @@ full_code = contract_code.format(alice=alice.encode('hex'),
 contract = s.abi_contract(full_code)
 
 # Both parties deposit money
-s.mine(3)
 contract.load_money(value=int(10E21), sender=tester.k0) # Alice
 contract.load_money(value=int(10E21), sender=tester.k1) # Bob
 
