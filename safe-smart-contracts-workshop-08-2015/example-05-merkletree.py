@@ -36,7 +36,13 @@ macro hash_node($h, $sibling, $bit):
 
 def check_index(x:bytes32, bits:uint8[4], siblings:bytes32[4]):
     h = hash_node(x, siblings[0], bits[0])
-    return(h:bytes32)
+    h = hash_node(h, siblings[1], bits[1])
+    h = hash_node(h, siblings[2], bits[2])
+    h = hash_node(h, siblings[3], bits[3])
+    if h == root: 
+        return(1)
+    else: 
+        return(0)
 """
 
 # Build the merkle tree
@@ -78,5 +84,12 @@ def get_siblings(bits):
 s = tester.state()
 c = s.abi_contract(contract_code.format(root_hash.encode('hex')))
 
-o = c.check_index(file_chunks[0], [0,0,0,0], [file_chunks[1]]*4)
-print o.encode('hex')
+def test_index(ind):
+    bits = index_to_bits(ind)
+    chunk = file_chunks[ind]
+    siblings = get_siblings(bits)
+    assert c.check_index(chunk, bits, siblings) == 1
+
+test_index(0)
+test_index(1)
+test_index(2)
