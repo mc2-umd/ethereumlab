@@ -9,8 +9,8 @@ alice = 0x{alice}
 bob = 0x{bob}
 deadline = {deadline}
 
-macro verify_signature($addr, $h, $v, $r, $s):
-    $addr == ecrecover($h, $v, $r, $s)
+macro verify_signature($addr, $m, $v, $r, $s):
+    $addr == ecrecover(sha3($m), $v, $r, $s)
 
 def refund():
    if msg.sender != alice:
@@ -28,7 +28,7 @@ def finalize(v,r,s, amount):
       log(type=Notice, text("finalize called by other-than-Bob"))
       return(-1)
 
-   if !verify_signature(alice, sha3(amount), v, r, s):
+   if !verify_signature(alice, amount, v, r, s):
       log(type=Notice, text("bad signature!"))
       return(-1)
 
