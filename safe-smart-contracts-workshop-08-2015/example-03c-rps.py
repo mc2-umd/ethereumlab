@@ -4,7 +4,6 @@ from sha3 import sha3_256
 import sys
 import struct
 import binascii
-import pytest
 
 serpent_code = '''
 data player[2](address, commit, choice, has_revealed)
@@ -148,54 +147,54 @@ print("Output of -1 designated an error.\n")
 ##################################### SETUP COMMITMENTS ########################################
 choice = ["rock", "paper", "scissors"]
 
-tobytearr = lambda n, L: [] if L == 0 else tobytearr(n / 256, L - 1)+[n % 256]
+# Use default addresses for Alice and Bob
+alice = tester.a0
+alice_key = tester.k0
+bob = tester.a1
+bob_key = tester.k1
 
-choice1 = 0x01
-nonce1 = 0x01
+tobytearr = lambda n, L: [] if L == 0 else tobytearr(n / 256, L - 1)+[n % 256]
+zfill = lambda s: (32-len(s))*'\x00' + s
+
+choice1 = random.randint(0,2)
+nonce1 = random.randint(0,2**32-1)
 ch1 = ''.join(map(chr, tobytearr(choice1, 32)))
 no1 = ''.join(map(chr, tobytearr(nonce1, 32)))
-print("Player zero chooses {} which is: {}").format(choice1, choice[choice1])
+print("Alice chooses {} which is: {}").format(choice1, choice[choice1])
 
-k0_pub_addr_hex = utils.privtoaddr(tester.k0)
 
-## Prepare and pad the address 
-k0_pub_addr  = ''.join(map(chr, tobytearr(long(k0_pub_addr_hex,16),32)))
 
-## Now use it for the commitment
-s1 = ''.join([k0_pub_addr, ch1, no1])
+## Use Alice's address for the commitment
+s1 = ''.join([zfill(alice), ch1, no1])
 comm1 = utils.sha3(s1)
 
-choice2 = 0x0
-nonce2 = 0x01
+choice2 = random.randint(0,2)
+nonce2 = random.randint(0,2**32-1)
 ch2 = ''.join(map(chr, tobytearr(choice2, 32)))
 no2 = ''.join(map(chr, tobytearr(nonce2, 32)))
-print("Player one chooses {} which is: {}\n").format(choice2, choice[choice2])
+print("Bob chooses {} which is: {}\n").format(choice2, choice[choice2])
 
-k1_pub_addr_hex = utils.privtoaddr(tester.k1)
-#print(type(k1_pub_addr_hex))  ## This is an encoded hex string .. cannot be used directly
-
-## Prepare and pad the address 
-k1_pub_addr  = ''.join(map(chr, tobytearr(long(k1_pub_addr_hex,16),32)))
-
-## Now use it for the commitment
-s2 = ''.join([k1_pub_addr, ch2, no2])
+## Use Bob's address for the commitment
+s2 = ''.join([zfill(bob), ch2, no2])
 comm2 = utils.sha3(s2)
 
-o = c.add_player(comm1, value=1000, sender=tester.k0)
-print("Player 0 Added: {}").format(o)
+o = c.add_player(comm1, value=1000, sender=alice_key)
+print("Alice Added: {}").format(o)
 
-o = c.add_player(comm2, value=1000, sender=tester.k1)
-print("Player 1 Added: {}\n").format(o)
+o = c.add_player(comm2, value=1000, sender=bob_key)
+print("Bob Added: {}\n").format(o)
 
-o = c.open(0x01,0x01, sender=tester.k0)
-print("Open for player 0: {}").format(o)
+o = c.open(choice1,nonce1, sender=alice_key)
+print("Open for Alice: {}").format(o)
 
-o = c.open(0x00,0x01, sender=tester.k1)
-print("Open for player 1: {}\n").format(o)
+o = c.open(choice2,nonce2, sender=bob_key)
+print("Open for Bob: {}\n").format(o)
 
 s.mine(11) # needed to move the blockchain at least 10 blocks so check can run
 
 o = c.check(sender=tester.k1)
-print("Check says player {} wins\n").format(o)
+if o == 2: print('Tied!')
+elif o == 0: print("Alice won!")
+elif o == 1: print("Bob won!")
 
 c.balance_check(sender=tester.k0)
