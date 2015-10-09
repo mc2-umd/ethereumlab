@@ -1,3 +1,7 @@
+from ethereum import tester, utils
+import bitcoin
+import os
+
 contract_code = """
 event Notice(x:str)
 
@@ -19,7 +23,7 @@ def refund():
 
    send(alice, self.balance)
 
-def finalize((v,r,s), amount):
+def finalize(v,r,s, amount):
    if msg.sender != bob:
       log(type=Notice, text("finalize called by other-than-Bob"))
       return(-1)
@@ -32,7 +36,6 @@ def finalize((v,r,s), amount):
    send(alice, self.balance)
 
 """
-
 
 s = tester.state()
 
@@ -47,30 +50,46 @@ print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
 # Create the contract
 full_code = contract_code.format(alice=alice.encode('hex'),
                                  bob=bob.encode('hex'),
-                                 deadline=100)
-print full_code
+                                 deadline=10)
 contract = s.abi_contract(full_code)
 
 # zfill: left-pads a string with 0's until 32 bytes
 zfill = lambda s: (32-len(s))*'\x00' + s
 
-# Both parties deposit money
-#s.mine(3)
-#contract.load_money(value=int(10E21), sender=tester.k0) # Alice
-#contract.load_money(value=int(10E21), sender=tester.k1) # Bob
 
-# Mine some blocks
-#s.block.extra_data = os.urandom(20) # Add actual randomness
-#s.mine(3)
+# Alice deposit 30
+s.mine(3)
+s.send(tester.k0, contract.address, int(30*10E21))
+print 'After Deposit Balances:'
+print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
+print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
+print 'Contract: %.2f' % ( float(s.block.get_balance(contract.address)) / 10E21 )
 
-# Run the cash_out 
-#contract.cash_out()
+# The payment signature
+def sigamt(amount, priv=tester.k0):
+   amount = utils.int_to_bytes(amount)
+   amount = zfill(amount)
+   pub = bitcoin.privtopub(priv)
+   amthash = utils.sha3(amount)
+   V, R, S = bitcoin.ecdsa_raw_sign(amthash, priv)
+   assert bitcoin.ecdsa_raw_verify(amthash, (V,R,S), pub)
+   return V,R,S
 
-#print 'Final balances:'
-#print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
-#print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
+# first payment
+pay5 = sigamt(int(5*10E21))
+# second payment
+pay10 = sigamt(int(10*10E21))
 
+# Bob calls finalize
+V,R,S = pay10
+fval = int(10*10E21)
+contract.finalize(V,R,S, fval, sender=tester.k1)
 
+s.mine(3)
+print 'Finalized Balanced:'
+print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
+print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
+print 'Contract: %.2f' % ( float(s.block.get_balance(contract.address)) / 10E21 )
 
 
 
