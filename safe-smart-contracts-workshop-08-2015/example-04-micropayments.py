@@ -58,7 +58,7 @@ zfill = lambda s: (32-len(s))*'\x00' + s
 
 
 # Alice deposit 30
-s.mine(3)
+s.mine(10)
 s.send(tester.k0, contract.address, int(30*10E21))
 print 'After Deposit Balances:'
 print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
@@ -85,7 +85,11 @@ V,R,S = pay10
 fval = int(10*10E21)
 contract.finalize(V,R,S, fval, sender=tester.k1)
 
-s.mine(3)
+s.mine(10)
+# Alice calls refund
+#contract.refund(sender=tester.k0)
+
+
 print 'Finalized Balanced:'
 print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
 print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
