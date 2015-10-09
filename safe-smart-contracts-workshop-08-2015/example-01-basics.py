@@ -21,13 +21,8 @@ def test_function(x):
 
 s = tester.state()
 
-# Use default addresses for Alice and Bob
-alice = tester.a0
-bob = tester.a1
-
 # Create the contract
-full_code = contract_code.format(alice=alice.encode('hex'),
-                                 bob=bob.encode('hex'))
+full_code = contract_code
 contract = s.abi_contract(full_code)
 
 # Invoke a method (in the local "mempool", to go in the next block)
