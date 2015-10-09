@@ -13,7 +13,7 @@ def refund():
       log(type=Notice, text("refund called by other-than-Alice"))
       return(-1)
 
-   if block.blocknumber < deadline: 
+   if block.number < deadline: 
       log(type=Notice, text("Too soon for Alice to claim refund"))
       return(-1)
 
@@ -48,7 +48,11 @@ print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
 full_code = contract_code.format(alice=alice.encode('hex'),
                                  bob=bob.encode('hex'),
                                  deadline=100)
+print full_code
 contract = s.abi_contract(full_code)
+
+# zfill: left-pads a string with 0's until 32 bytes
+zfill = lambda s: (32-len(s))*'\x00' + s
 
 # Both parties deposit money
 #s.mine(3)
