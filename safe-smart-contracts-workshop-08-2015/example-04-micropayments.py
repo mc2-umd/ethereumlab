@@ -1,10 +1,12 @@
-code = """
+contract_code = """
+event Notice(x:str)
 
-constant alice = {}
-constant bob = {}
-constant deadline = {}
+alice = 0x{alice}
+bob = 0x{bob}
+deadline = {deadline}
 
-
+macro verify_signature($addr, $h, $v, $r, $s):
+    $addr == ecrecover($h, $v, $r, $s)
 
 def refund():
    if msg.sender != alice:
@@ -17,13 +19,12 @@ def refund():
 
    send(alice, self.balance)
 
-
-def finalize(sig, amount):
+def finalize((v,r,s), amount):
    if msg.sender != bob:
       log(type=Notice, text("finalize called by other-than-Bob"))
       return(-1)
 
-   if !check_signature(alice, sig, amount):
+   if !verify_signature(alice, sha3(amount), v, r, s):
       log(type=Notice, text("bad signature!"))
       return(-1)
 
@@ -31,6 +32,42 @@ def finalize(sig, amount):
    send(alice, self.balance)
 
 """
+
+
+s = tester.state()
+
+# Use default addresses for Alice and Bob
+alice = tester.a0
+bob = tester.a1
+
+print 'Initial balances:'
+print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
+print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
+
+# Create the contract
+full_code = contract_code.format(alice=alice.encode('hex'),
+                                 bob=bob.encode('hex'),
+                                 deadline=100)
+contract = s.abi_contract(full_code)
+
+# Both parties deposit money
+#s.mine(3)
+#contract.load_money(value=int(10E21), sender=tester.k0) # Alice
+#contract.load_money(value=int(10E21), sender=tester.k1) # Bob
+
+# Mine some blocks
+#s.block.extra_data = os.urandom(20) # Add actual randomness
+#s.mine(3)
+
+# Run the cash_out 
+#contract.cash_out()
+
+#print 'Final balances:'
+#print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
+#print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
+
+
+
 
 
 
