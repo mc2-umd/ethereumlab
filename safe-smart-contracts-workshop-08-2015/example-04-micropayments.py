@@ -94,14 +94,3 @@ print 'Finalized Balanced:'
 print 'Alice: %.2f' % (float(s.block.get_balance(alice)) / 10E21)
 print '  Bob: %.2f' % (float(s.block.get_balance(bob)) / 10E21)
 print 'Contract: %.2f' % ( float(s.block.get_balance(contract.address)) / 10E21 )
-
-
-
-
-# What are the cases?
-
-# - Bob can choos
-
-# - Bob does not call finalize, Alice claims refund
-
-# - 
