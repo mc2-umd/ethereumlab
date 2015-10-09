@@ -4,6 +4,7 @@ from sha3 import sha3_256
 import sys
 import struct
 import binascii
+import random
 
 serpent_code = '''
 data player[2](address, commit, choice, has_revealed)
