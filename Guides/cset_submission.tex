@@ -31,7 +31,10 @@
 %\setcounter{tocdepth}{5}
 %\tableofcontents
 
-\newpage
+\begin{abstract}
+
+\end{abstract}
+
 \section{Introduction}
 
 %\elaine{rewrite}
@@ -941,6 +944,76 @@ is included in our open-source lab materials
 available at 
 ~\cite{anonymous}
 }
+
+\section{Cryptocurrency and Smart Contracts as a Cybersecurity Pedagogical Platform}
+Our experiences also led us to conclude 
+that cryptocurrency and smart contracts are a
+great platform for cybersecurity pedagogy. 
+First, cryptocurrency and smart contracts, like
+other cool emerging technologies, could easily capture the students'
+attention and imagination.
+Second, 
+cybersecurity is a science that is interdisciplinary in nature;
+and cryptocurrency is a platform that captures 
+multiple core cybersecurity notions, e.g., cryptography, 
+programming languages, and incentives. 
+Third, cryptocurrency and smart contracts
+easily motivate ``adversarial thinking''. For example,
+in our lab, students had to analyze their own smart contracts
+and reason how other selfish players can harm 
+honest participants and maximize their own financial gains.
+
+\ignore{
+in our lab, students were able to compose smart contracts,
+and then conduct in-depth security analyses of their own smart contracts.
+In this process, students learned the 
+essence of ``adversarial thinking'', e.g., by reasoning how
+selfish participants in a smart contract 
+can maximize its financial gains and harm honest players. 
+}
+
+\subsection{Example: Off-chain payments and Digital Signatures}
+Micropayments channels. Illustration of correct use of digital signatures. 
+\anote{This subsection and the other subsection are works in progress}
+
+It is also easy to demonstrate a replay attack, if a public key is used in multiple different contexts. Solved by either creating a fresh key for each contract, or by.
+
+Although  or
+
+\subsection{Example: Accountable File Storage and Merkle Trees}
+
+Merkle trees are a fundamental technique in cryptography and secure systems. Convenient application.
+
+In this application, consumer hires a storage provider to store a file. To check that the file is actually being stored, must periodically submit fresh Proofs-of-Data-Possession (PDP). Intuitively, a PDP requires the service provider to access a pseudorandomly-chosen sample of file blocks, which demonstrates access to a significant fraction of the file. Can be combined with erasure encoding. Of course, this does not guarantee that the service provider will respond to a query --- this would necessitate some other approach.
+
+\subsection{The ``Build, Break, and Amend Your Own Programs''
+Approach to Cybersecurity Education}
+Inspired by our smart contract programming lab, 
+we also feel that the 
+``Build, break, and amend your own programs'' approach
+is very helpful for cybersecurity education. 
+
+In our labs, students learned why security is difficult 
+and learned adversarial thinking
+by analyzing and breaking 
+their own programs.  
+Students initially  
+failed to make proper use of cryptography in their 
+smart contracts (see Section \ref{sec:pitfalls}).
+But then, by realizing
+why their smart contracts are not safe, they 
+become self-driven in learning cryptographic building blocks.
+%-- then, by
+%conducting a security analysis of their own contracts,
+%students learned why cryptography is cool and 
+%this in turn motivated their learning of cryptographic topics.
+
+In future work, we plan to further extend these pedagogical ideas, 
+such that students can learn through hands-on, 
+creative experiences, and learn adversarial thinking 
+through attacking and amending their own code.
+
+
 \section{Conclusion}
 \subsection{Open-Source Course and Lab Materials}
 %Besides the aforementioned 
@@ -993,65 +1066,6 @@ in programming safe smart contracts.
 The student is presented with the buggy version of the contract
 and asked to fix the bugs in a step-by-step, guided manner.
 \end{itemize}
-
-
-\subsection{Cryptocurrency and Smart Contracts as 
-a Cybersecurity Pedagogical Platform}
-Our experiences also led us to conclude 
-that cryptocurrency and smart contracts are a
-great platform for cybersecurity pedagogy. 
-First, cryptocurrency and smart contracts, like
-other cool emerging technologies, could easily capture the students'
-attention and imagination.
-Second, 
-cybersecurity is a science that is interdisciplinary in nature;
-and cryptocurrency is a platform that captures 
-multiple core cybersecurity notions, e.g., cryptography, 
-programming languages, and incentives. 
-Third, cryptocurrency and smart contracts
-easily motivate ``adversarial thinking''. For example,
-in our lab, students had to analyze their own smart contracts
-and reason how other selfish players can harm 
-honest participants and maximize their own financial gains.
-
-\ignore{
-in our lab, students were able to compose smart contracts,
-and then conduct in-depth security analyses of their own smart contracts.
-In this process, students learned the 
-essence of ``adversarial thinking'', e.g., by reasoning how
-selfish participants in a smart contract 
-can maximize its financial gains and harm honest players. 
-}
-
-
-\subsection{The ``Build, Break, and Amend Your Own Programs''
-Approach to Cybersecurity Education}
-Inspired by our smart contract programming lab, 
-we also feel that the 
-``Build, break, and amend your own programs'' approach
-is very helpful for cybersecurity education. 
-
-In our labs, students learned why security is difficult 
-and learned adversarial thinking
-by analyzing and breaking 
-their own programs.  
-Students initially  
-failed to make proper use of cryptography in their 
-smart contracts (see Section \ref{sec:pitfalls}).
-But then, by realizing
-why their smart contracts are not safe, they 
-become self-driven in learning cryptographic building blocks.
-%-- then, by
-%conducting a security analysis of their own contracts,
-%students learned why cryptography is cool and 
-%this in turn motivated their learning of cryptographic topics.
-
-In future work, we plan to further extend these pedagogical ideas, 
-such that students can learn through hands-on, 
-creative experiences, and learn adversarial thinking 
-through attacking and amending their own code.
-
-
 
 \subsection{Inspired Research}
 Our lab exposed numerous pitfalls of programming  
