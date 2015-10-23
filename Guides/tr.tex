@@ -81,6 +81,7 @@ our undergraduate-level ``CMSC 414: Computer and Network Security''
 class -- the first of its
 kind that has ever been attempted.
 
+\anote{Also, in October 2015, at [anonymized], organized a 1-day workshop on secure smart contract programming, with further developed materials.}
 
 %Cryptocurrencies, including Bitcoin, Ethereum, and many others, are an exciting new technology. They are experimental distributed systems that allow users to manipulate virtual currency. Actual stored wealth and monetary value are at stake! Ethereum is the first embodiment of the more general idea: it provides an expressive and flexible programming environment for controlling and interacting with money.
 
@@ -674,10 +675,10 @@ Here, the obvious remedy is to use
 cryptographic commitments.
 Both players can commit to their inputs in one time epoch,
 and then in a later epoch open the commitments and reveal their inputs.
-A commitment satisfies two properties, {\it binding} and {\it hiding}.
+A commitment satisfies three properties, {\it binding}, {\it hiding}, and {\it non-malleability}.
 Binding ensures that a player cannot change their input
 after committing to it. Hiding ensures
-that a party learns nothing about the others input choice even after observing the commitment.
+that a party learns nothing about the others input choice even after observing the commitment. Non-malleability ensures that a player cannot use other player's commitments to derive related commitments.
 
 In Figure~\ref{fig:nocrypto}, we show a fixed contract that properly uses commitments. The previous \texttt{player\_input} function is broken up into two phases: in the new \texttt{player\_input} function, each player provides a commitment; after both commitments are received, the \texttt{open} function is used to reveal their commited inputs.
 
