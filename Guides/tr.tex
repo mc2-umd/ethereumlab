@@ -48,7 +48,10 @@
 %\setcounter{tocdepth}{5}
 %\tableofcontents
 
-\newpage
+\begin{abstract}
+
+\end{abstract}
+
 \section{Introduction}
 
 %\elaine{rewrite}
@@ -1042,6 +1045,17 @@ selfish participants in a smart contract
 can maximize its financial gains and harm honest players. 
 }
 
+\subsection{Example: Off-chain payments and Digital Signatures}
+Micropayments channels. Illustration of correct use of digital signatures. 
+\anote{This subsection and the other subsection are works in progress}
+
+It is also easy to demonstrate a replay attack, if a public key is used in multiple different contexts. Solved by either creating a fresh key for each contract, or by.
+
+\subsection{Example: Accountable File Storage and Merkle Trees}
+
+Merkle trees are a fundamental technique in cryptography and secure systems. Convenient application.
+
+In this application, consumer hires a storage provider to store a file. To check that the file is actually being stored, must periodically submit fresh Proofs-of-Data-Possession (PDP). Intuitively, a PDP requires the service provider to access a pseudorandomly-chosen sample of file blocks, which demonstrates access to a significant fraction of the file. Can be combined with erasure encoding. Of course, this does not guarantee that the service provider will respond to a query --- this would necessitate some other approach.
 
 \subsection{The ``Build, Break, and Amend Your Own Programs''
 Approach to Cybersecurity Education}
