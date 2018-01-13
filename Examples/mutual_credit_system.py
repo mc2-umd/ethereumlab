@@ -1,5 +1,6 @@
 import serpent
-from pyethereum import tester, utils, abi
+from ethereum import utils, abi
+from ethereum.tools import tester
 
 #A mutual credit system will zero out when all debts are paid.
 
@@ -24,8 +25,8 @@ def balance(addr):
 public_k0 = utils.privtoaddr(tester.k0)
 public_k1 = utils.privtoaddr(tester.k1)
 
-s = tester.state()
-c = s.abi_contract(serpent_code)
+s = tester.Chain()
+c = s.contract(serpent_code,language='serpent')
 
 o = c.balance(public_k0)
 print("tester.k0's current balance is " + str(o))

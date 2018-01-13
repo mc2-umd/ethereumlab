@@ -1,5 +1,6 @@
 import serpent
-from pyethereum import tester, utils, abi
+from ethereum import utils, abi
+from ethereum.tools import tester
 from sha3 import sha3_256
 import sys
 import struct
@@ -154,8 +155,8 @@ def test_callstack():
 	return(1)
 '''
 
-s = tester.state()
-c = s.abi_contract(serpent_code)
+s = tester.Chain()
+c = s.contract(serpent_code,language='serpent')
 
 print("Output of 1 designated success for player 1.")
 print("Output of 2 designated success for player 2.")

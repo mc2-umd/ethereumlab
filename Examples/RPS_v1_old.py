@@ -1,5 +1,6 @@
 import serpent
-from pyethereum import tester, utils, abi
+from ethereum import utils, abi
+from ethereum.tools import tester
 
 serpent_code = '''
 data winnings_table[3][3]
@@ -80,8 +81,8 @@ def balance_check():
 	log(self.storage["player2"].balance)
 '''
 
-s = tester.state()
-c = s.abi_contract(serpent_code)
+s = tester.Chain()
+c = s.contract(serpent_code,language='serpent')
 
 o = c.add_player(value=1000,sender=tester.k0)
 print("Player 1 Added: {}").format(o)
